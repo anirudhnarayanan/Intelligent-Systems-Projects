@@ -66,7 +66,7 @@ class EightPuzzle:
             for i in range(3):
                 for j in range(3):
                     if not self.board[i][j] == 0:
-                        cost += 0 if (i-self.correct_positions[self.board[i][j]][0] + j-self.correct_positions[self.board[i][j]][1]) == 0 else 1 
+                        cost += 0 if abs(i-self.correct_positions[self.board[i][j]][0]) + abs(j-self.correct_positions[self.board[i][j]][1]) == 0 else 1 
             #cost calculation for various states by calculating the distnace betweeb a coordinate 
             #of an element in the current state and a coordinate of the element in the goal state
             #in this block the x and y coordinate differences are separately calculated and added
