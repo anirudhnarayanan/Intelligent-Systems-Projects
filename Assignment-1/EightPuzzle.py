@@ -20,13 +20,26 @@ class EightPuzzle:
     #this is for the initial state
 
 
-        self.print_board()
+        #self.print_board()
 
     def set_goal_state(self,goal_state):
         for i in range(len(goal_state)):
             self.correct_positions[goal_state[i]] = [i/3,i%3]
     #the above block is used for setting goal state and records
     #coordinates of the correct positions
+    
+    @staticmethod
+    def printarrayboard(tempboard):
+        for i in range(len(tempboard)):
+            if i%3 == 0:
+                print "\n"
+                print tempboard[i],
+            else:
+                print tempboard[i],
+
+            
+        print "\n"
+
 
     def print_board(self):
         for i in range(3):
@@ -37,19 +50,30 @@ class EightPuzzle:
                     print "\n"
                     print self.board[i][j],
   #above block used for printing the states as a 3*3 board
-    def current_cost(self):
+    def current_cost(self,htype): #htype is the heuristic type 0 for manhattan, 1 for misplaced tiles
         cost = 0
-        for i in range(3):
-            for j in range(3):
-                if not self.board[i][j] == 0:
-                    cost += abs(i-self.correct_positions[self.board[i][j]][0]) + abs(j-self.correct_positions[self.board[i][j]][1]) 
-        #cost calculation for various states by calculating the distnace betweeb a coordinate 
-        #of an element in the current state and a coordinate of the element in the goal state
-        #in this block the x and y coordinate differences are separately calculated and added
-        #print cost 
+        if htype == 0:
+            for i in range(3):
+                for j in range(3):
+                    if not self.board[i][j] == 0:
+                        cost += abs(i-self.correct_positions[self.board[i][j]][0]) + abs(j-self.correct_positions[self.board[i][j]][1]) 
+            #cost calculation for various states by calculating the distnace betweeb a coordinate 
+            #of an element in the current state and a coordinate of the element in the goal state
+            #in this block the x and y coordinate differences are separately calculated and added
+            #print cost 
+
+        else:
+            for i in range(3):
+                for j in range(3):
+                    if not self.board[i][j] == 0:
+                        cost += 0 if (i-self.correct_positions[self.board[i][j]][0] + j-self.correct_positions[self.board[i][j]][1]) == 0 else 1 
+            #cost calculation for various states by calculating the distnace betweeb a coordinate 
+            #of an element in the current state and a coordinate of the element in the goal state
+            #in this block the x and y coordinate differences are separately calculated and added
+        
         return cost
-                
-         
+                    
+             
     def conv(self):
         arrayform = []
         k= 0
