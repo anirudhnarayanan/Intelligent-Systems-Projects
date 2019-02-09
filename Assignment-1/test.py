@@ -18,7 +18,7 @@ if __name__ == "__main__":
     k =0
     positions = sys.argv[1].split(",")[:9]
     goal = sys.argv[2].split(",")[:9]
-
+    print "positions argv(1)"
     positions = map(int,positions)
     goal = map(int,goal)
     input_states = [[None for i in range(3)] for j in range(3)]
@@ -29,7 +29,7 @@ if __name__ == "__main__":
             k+=1
 
     main(input_states,goal)
-
+    print "enter"
 
 
 

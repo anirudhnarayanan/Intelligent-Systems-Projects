@@ -13,10 +13,11 @@ class Node:
         self.myeightpuzzle.set_goal_state(Goal)
 
         self.gofx = gofx
-        self.hofx = self.myeightpuzzle.current_cost()
-        self.fofx = self.gofx + self.hofx
-        self.next = self.myeightpuzzle.options()
-
+        self.hofx = self.myeightpuzzle.current_cost()#path heuristic cost is calculated
+        self.fofx = self.gofx + self.hofx #total cost adding depth  
+        self.next = self.myeightpuzzle.options()#move options
+      
+        
     def setnext(self,nextstates): #Set all next values
         for i in nextstates:
             self.next.append(i)
@@ -26,6 +27,7 @@ class Node:
 
     def __lt__(self,other):
         return self.fofx < other.fofx
+    #least value of fofx is selected
 
 
 
