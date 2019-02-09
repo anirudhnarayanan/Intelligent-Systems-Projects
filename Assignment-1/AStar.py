@@ -27,7 +27,7 @@ class Solver:
 
                 manhattan_cost = nextchild.myeightpuzzle.current_cost()
                 if manhattan_cost == 0:
-                    return self.goal,steps
+                    return self.goal,steps,nextchild.gofx
                 depth = depth + 1
                 for child in nextchild.next:
                     self.pq.put(Node(child,self.goal,depth))
