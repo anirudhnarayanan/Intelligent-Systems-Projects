@@ -7,7 +7,7 @@ def main(input_states,goal):
     print input_states
     print goal
     a = Solver(input_states,goal)
-    a.ASTAR()
+    print a.ASTAR()
 
 if __name__ == "__main__":
     if len(sys.argv) < 3: 
