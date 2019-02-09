@@ -3,6 +3,11 @@
 from AStar import Solver
 import sys
 
+def main(input_states,goal):
+    print input_states
+    print goal
+    a = Solver(input_states,goal)
+    a.ASTAR()
 
 if __name__ == "__main__":
     if len(sys.argv) < 3: 
@@ -23,10 +28,7 @@ if __name__ == "__main__":
 
             k+=1
 
-    print input_states
-    print goal
-    a = Solver(input_states,goal)
-    a.ASTAR()
+    main(input_states,goal)
 
 
 
