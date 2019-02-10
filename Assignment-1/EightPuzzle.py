@@ -88,24 +88,20 @@ class EightPuzzle:
         move_options = []
         #print self.blank_pos
         if self.blank_pos[0] - 1  >= 0 :
-            ##print "left called"
-            left = [self.blank_pos[0] - 1, self.blank_pos[1]]
-            ##print left 
-            move_options.append(self.pseudomove(left))
-
-        if self.blank_pos[0] + 1 <= 2 :
-            right = [self.blank_pos[0] + 1, self.blank_pos[1]]
-            move_options.append(self.pseudomove(right))
-
-        if self.blank_pos[1] - 1 >= 0 :
-            #print "up called"
-            up = [self.blank_pos[0], self.blank_pos[1] - 1]
-            #print up
+            up = [self.blank_pos[0] - 1, self.blank_pos[1]]
             move_options.append(self.pseudomove(up))
 
-        if self.blank_pos[1] + 1 <= 2 :
-            down = [self.blank_pos[0], self.blank_pos[1]+1]
+        if self.blank_pos[0] + 1 <= 2 :
+            down = [self.blank_pos[0] + 1, self.blank_pos[1]]
             move_options.append(self.pseudomove(down))
+
+        if self.blank_pos[1] - 1 >= 0 :
+            left = [self.blank_pos[0], self.blank_pos[1] - 1]
+            move_options.append(self.pseudomove(left))
+
+        if self.blank_pos[1] + 1 <= 2 :
+            right = [self.blank_pos[0], self.blank_pos[1]+1]
+            move_options.append(self.pseudomove(right))
         #the above code block is to describe options of  movement of the blank pos
         #in left right up down directions
 

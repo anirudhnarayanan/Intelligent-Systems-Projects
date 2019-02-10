@@ -40,15 +40,20 @@ def main(input_states,goal,htype):
     print response[3]
 
 if __name__ == "__main__":
-    if len(sys.argv) < 3: 
-        print "Usage %s <comma separated start state> <comma separated goal state> <heuristic 0/1 -> manhattan/misplaced tiles"%sys.argv[0]
-        sys.exit(-1)
+    print "Usage %s <comma separated start state(in comma separated numbers)> <comma separated goal state(in comma separated numbers)> <heuristic 0/1 -> manhattan/misplaced tiles"%sys.argv[0]
+    print "EXAMPLE MANHATTAN"
+    print "EXAMPLE: 1,2,3,4,5,6,7,0,8 1,2,3,4,5,6,7,8,0 0"
+    print "EXAMPLE MISPLACED TILES"
+    print "EXAMPLE: 1,2,3,4,5,6,7,0,8 1,2,3,4,5,6,7,8,0 1"
 
 
     k =0
-    positions = sys.argv[1].split(",")[:9]
-    goal = sys.argv[2].split(",")[:9]
-    htype = int(sys.argv[3])
+    arg1 = raw_input("start state: ")
+    arg2 = raw_input("goal state: ")
+    arg3 = raw_input("heuristic: ")
+    positions = arg1.split(",")[:9]
+    goal = arg2.split(",")[:9]
+    htype = int(arg3)
     #print "positions argv(1)"
     positions = map(int,positions)
     goal = map(int,goal)

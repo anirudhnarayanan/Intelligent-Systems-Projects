@@ -29,8 +29,8 @@ class Solver:
             nextchild = self.pq.get()
             if not nextchild.myeightpuzzle.board in explored:
                 depth = nextchild.gofx
-                #nextchild.myeightpuzzle.print_board()
-                #print "-------"
+                nextchild.myeightpuzzle.print_board()
+                print "-------"
 
                 manhattan_cost = nextchild.myeightpuzzle.current_cost(self.htype)
                 if manhattan_cost == 0:
@@ -39,8 +39,9 @@ class Solver:
                     return self.goal,steps,nextchild.gofx,generated,nextchild
                 depth = depth + 1
                 for child in nextchild.next:
-                    self.pq.put(Node(child,self.goal,depth,self.htype,nextchild))
-                    generated +=1
+                    if not child in explored:
+                        self.pq.put(Node(child,self.goal,depth,self.htype,nextchild))
+                        generated +=1
                 #if goal is not reached next children ie after expansion of parent 
                 #are put in the queue
                 temp_exec += 1
