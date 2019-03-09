@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
 import copy
-from queenhits import queenhits
+from .queenhits import queenhits
 
 def hofx(board,queens,n):
     hofx = [[] for i in range(n)]
+    myhofx = queenhits(board,queens)
     for i in range(n):
         queenpos = board[i].index('Q')
         for j in range(n):
@@ -17,7 +18,7 @@ def hofx(board,queens,n):
                 temp_pos.append((i,j))
                 hofx[i].append(queenhits(tempboard,temp_pos))    #calculate queen hits if 
 
-    return hofx
+    return hofx,myhofx
 
 
                 
