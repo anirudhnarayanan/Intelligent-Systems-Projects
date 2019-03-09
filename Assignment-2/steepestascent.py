@@ -64,6 +64,7 @@ def steepestascent(n):
     
 
     print(myhof)
+    return myhof
 
 
 
