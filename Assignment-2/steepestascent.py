@@ -67,5 +67,14 @@ def steepestascent(n):
     return myhof
 
 
+if __name__ == "__main__":
+    answer = 0
+    for i in range(1000):
+        print("I AM RUNNING " + str(i))
+        answer+=1 if steepestascent(8) == 0 else 0
+
+    #steepestasc(8)
+
+    print((float(answer)/float(1000))*100)
 
 
