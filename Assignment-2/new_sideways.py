@@ -48,7 +48,7 @@ def steepestascent(n):
     lowj = tryloc[1]
     print(low,lowi,lowj)
     count = 0
-    while(low <= myhof and count < 200):
+    while(low <= myhof and count < 200 and myhof>0):
         current_j = queenhash[lowi]
         board[lowi][current_j] = 0
         board[lowi][lowj] = "Q"
@@ -86,4 +86,9 @@ def steepestascent(n):
 
 
 if __name__ == "__main__":
-    steepestascent(8)
+    success=0
+    #print(steepestascent(8))
+    for i in range(10):
+        success+=1 if steepestascent(8) == 0 else 0
+
+    print(float(success)*100/float(10))
