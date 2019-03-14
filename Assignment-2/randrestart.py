@@ -80,6 +80,8 @@ if __name__ == "__main__":
         success = 0
 
         if rrestart == 0:
+            success_counter = 0
+            fail_counter = 0
             for i in range(numruns):
                 mypass,iters = sidewaysascent(n)
                 success+= 1 if mypass == 0 else 0
@@ -87,8 +89,7 @@ if __name__ == "__main__":
                     success_counter +=iters
                 else:
                     fail_counter += iters
-            
-            print(str(float(sum1)/float(numruns)) + " is the average number of restarts required")
+            print("The success percentage is : "+ str(float(success)*100/float(numruns)))
             print("Average Iters in success : "+ str(float(success_counter)/float(numruns)))
             print("Average Iters in failure : "+ str(float(fail_counter)/float(numruns)))
 
