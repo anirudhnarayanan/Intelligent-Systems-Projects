@@ -93,9 +93,9 @@ def sidewaysascent(n):
 
 if __name__ == "__main__":
     import sys
-    success=0
-    #print(steepestascent(8))
-    for i in range(1000):
-        success+=1 if steepestascent(8) == 0 else 0
+    #success=0
+    print(sidewaysascent(8))
+    #for i in range(1000):
+    #    success+=1 if steepestascent(8) == 0 else 0
 
-    print(float(success)*100/float(1000))
+    #print(float(success)*100/float(1000))

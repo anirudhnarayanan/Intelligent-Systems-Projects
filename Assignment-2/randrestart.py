@@ -7,6 +7,7 @@ def randrestart(n,sideways = False):
     ans = 1
     numiters = 0
     total_iters = 0
+    array_iters = []
     while(not ans == 0):
         print(sideways)
         if sideways == True:
@@ -16,11 +17,16 @@ def randrestart(n,sideways = False):
             ans,iters = steepestascent(n)
 
         total_iters +=iters
+        array_iters.append(iters)
 
         numiters +=1
 
     print(numiters)
-    return numiters,float(total_iters)/float(numiters)
+    print("my iters")
+    print(iters)
+    print(total_iters)
+    print(array_iters)
+    return numiters,float(total_iters)
 
 
 if __name__ == "__main__":
@@ -56,12 +62,14 @@ if __name__ == "__main__":
 
         if rrestart == 1:
             sum1 = 0
+            total_iters =0
             for i in range(numruns):
                 mysum,avgiters =randrestart(n)
+                total_iters+=avgiters
                 sum1+=mysum
             
             print(str(float(sum1)/float(numruns)) + " is the average number of restarts required")
-            print(str(avgiters) + " is the average number of iterations required in each restarted attempt")
+            print(str(float(total_iters)/float(numruns)) + " is the average number of iterations required in each restarted attempt")
 
 
 
@@ -87,12 +95,14 @@ if __name__ == "__main__":
 
         if rrestart == 1:
             sum1 = 0
+            total_iters = 0
             for i in range(numruns):
                 mysum,avgiters =randrestart(n,True)
+                total_iters+=avgiters
                 sum1+=mysum
-
+            
             print(str(float(sum1)/float(numruns)) + " is the average number of restarts required")
-            print(str(avgiters) + " is the average number of iterations required in each restarted attempt")
+            print(str(float(total_iters)/float(numruns)) + " is the average number of iterations required in each restarted attempt")
         
         
 
