@@ -26,7 +26,7 @@ def calclow(hofxmat,n):
 
     return lowcoords,low
 
-def steepestascent(n):
+def sidewaysascent(n):
     board = [[0 for i in range(n)] for j in range(n)]
     all_queens = []
     queenhash = {}
@@ -48,7 +48,8 @@ def steepestascent(n):
     lowj = tryloc[1]
     print(low,lowi,lowj)
     count = 0
-    while(low <= myhof and count < 200 and myhof>0):
+    total_count = 0
+    while(low <= myhof and count < 400 and myhof>0):
         current_j = queenhash[lowi]
         board[lowi][current_j] = 0
         board[lowi][lowj] = "Q"
@@ -78,17 +79,23 @@ def steepestascent(n):
         lowj = tryloc[1]
         count +=1
 
+        if low < myhof:
+            count = 0
+
+        total_count+=1
+
     
 
     print(myhof)
-    return myhof
+    return myhof,total_count
 
 
 
 if __name__ == "__main__":
+    import sys
     success=0
     #print(steepestascent(8))
-    for i in range(10):
+    for i in range(1000):
         success+=1 if steepestascent(8) == 0 else 0
 
-    print(float(success)*100/float(10))
+    print(float(success)*100/float(1000))

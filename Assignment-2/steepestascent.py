@@ -36,6 +36,8 @@ def steepestascent(n):
 
     low,lowi,lowj = calclow(hofxmat,n)
     print(low,lowi,lowj)
+
+    total_count = 0
     
     while(low < myhof):
         current_j = queenhash[lowi]
@@ -61,20 +63,15 @@ def steepestascent(n):
 
         hofxmat,myhof = hofx(board,all_queens,n)
         low,lowi,lowj = calclow(hofxmat,n)
+        total_count += 1
     
 
     print(myhof)
-    return myhof
+    return myhof,total_count
 
 
 if __name__ == "__main__":
     answer = 0
-    for i in range(1000):
-        print("I AM RUNNING " + str(i))
-        answer+=1 if steepestascent(8) == 0 else 0
-
-    #steepestasc(8)
-
-    print((float(answer)/float(1000))*100)
-
+    steepestascent(8)
+    
 
