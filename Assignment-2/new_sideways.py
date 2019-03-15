@@ -40,13 +40,13 @@ def sidewaysascent(n):
     printqueens(board,all_queens,n)
 
     hofxmat,myhof = hofx(board,all_queens,n)
-    print(hofxmat,myhof)
+    #print(hofxmat,myhof)
 
     lowcoords,low = calclow(hofxmat,n)
     tryloc = list(lowcoords.keys())[random.randint(0,len(lowcoords.keys())-1)]
     lowi = tryloc[0]
     lowj = tryloc[1]
-    print(low,lowi,lowj)
+    #print(low,lowi,lowj)
     count = 0
     total_count = 0
     while(low <= myhof and count < 400 and myhof>0):

@@ -32,10 +32,10 @@ def steepestascent(n):
     printqueens(board,all_queens,n)
 
     hofxmat,myhof = hofx(board,all_queens,n)
-    print(hofxmat,myhof)
+    #print(hofxmat,myhof)
 
     low,lowi,lowj = calclow(hofxmat,n)
-    print(low,lowi,lowj)
+    #print(low,lowi,lowj)
 
     total_count = 0
     
