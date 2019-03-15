@@ -95,8 +95,14 @@ def sidewaysascent(n,printme = False):
 
     #print(myhof)
     if printme == True:
-        print("current score : :" + str(myhof))
+        print("current score :" + str(myhof))
         print("total count of iterations: " + str(total_count))
+        
+        if myhof == 0:
+            print("Solution Found")
+        else:
+            print("Solutionn Not found")
+
     return myhof,total_count,first_board
 
 

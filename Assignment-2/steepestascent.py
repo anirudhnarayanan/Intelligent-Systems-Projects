@@ -18,7 +18,7 @@ def calclow(hofxmat,n):
 
     return low,lowi,lowj
 
-def steepestascent(n):
+def steepestascent(n,printme = True):
     board = [[0 for i in range(n)] for j in range(n)]
     all_queens = []
     queenhash = {}
@@ -29,7 +29,9 @@ def steepestascent(n):
         all_queens.append((i,insertindex))
         queenhash[i] = insertindex
 
-    printqueens(board,all_queens,n)
+    
+    if not printme:
+        printqueens(board,all_queens,n)
 
     hofxmat,myhof = hofx(board,all_queens,n)
     #print(hofxmat,myhof)
@@ -44,30 +46,28 @@ def steepestascent(n):
         board[lowi][current_j] = 0
         board[lowi][lowj] = "Q"
         queenhash[lowi] = lowj
-
-        print("new maxima")
-        print(low)
-        print("current maxima")
-        print(myhof)
-        #print("where my queens are now")
-        #print(all_queens)
-        #print("where i need to move them")
-        #print(lowi,lowj)
-        #print("the one i am moving")
-        #print(lowi,current_j)
+        if printme == True:
+            print("new maxima")
+            print(low)
+            print("current maxima")
+            print(myhof)
         all_queens.remove((lowi,current_j))
         all_queens.append((lowi,lowj))
-
-        printqueens(board,all_queens,n)
-        print("\n")
+        if printme == True:
+            printqueens(board,all_queens,n)
+            print("\n")
 
         hofxmat,myhof = hofx(board,all_queens,n)
         low,lowi,lowj = calclow(hofxmat,n)
         total_count += 1
     
-
-    print("Current Heuristic value: " + str(myhof))
-    print("Total number of iterations: " + str(total_count))
+    if printme == True:
+        print("Current Heuristic value: " + str(myhof))
+        print("Total number of iterations: " + str(total_count))
+        if myhof == 0:
+            print("Solution Found")
+        else:
+            print("No Solution Found")
     return myhof,total_count
 
 

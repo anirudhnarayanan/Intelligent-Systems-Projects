@@ -14,7 +14,7 @@ def randrestart(n,sideways = False):
             ans,iters = sidewaysascent(n)
         else:
             print("calling steepest")
-            ans,iters = steepestascent(n)
+            ans,iters,board = steepestascent(n)
 
         total_iters +=iters
         array_iters.append(iters)
@@ -47,8 +47,10 @@ if __name__ == "__main__":
         if rrestart == 0:
             success_counter = 0
             fail_counter = 0
+            mycount = 0
             for i in range(numruns):
-                mypass,iters = steepestascent(n)
+                printme = True if i<4 else False 
+                mypass,iters = steepestascent(n,printme)
                 success+= 1 if mypass == 0 else 0
                 if mypass == 0:
                     success_counter +=iters
@@ -101,7 +103,10 @@ if __name__ == "__main__":
             print(fail_counter)
             print("The success percentage is : "+ str(float(success)*100/float(len(all_boards))))
             print("Average Iters in success : "+ str(float(success_counter)/float(success)))
-            print("Average Iters in failure : "+ str(float(fail_counter)/(len(all_boards)- success)))
+            if len(all_boards) == success:
+                print("Average Iterations in Failure: 0 (No failure)")
+            else:
+                print("Average Iters in failure : "+ str(float(fail_counter)/(len(all_boards)- success)))
 
 
         if rrestart == 1:
