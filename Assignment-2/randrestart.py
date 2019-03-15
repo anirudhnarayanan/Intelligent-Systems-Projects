@@ -82,16 +82,26 @@ if __name__ == "__main__":
         if rrestart == 0:
             success_counter = 0
             fail_counter = 0
+            all_boards = []
+            times = 4
+            mytime=0
             for i in range(numruns):
-                mypass,iters = sidewaysascent(n)
+                printme = True if mytime<4 else False
+                mypass,iters,board = sidewaysascent(n,printme)
+                mytime+=1
+                all_boards.append(board)
                 success+= 1 if mypass == 0 else 0
                 if mypass == 0:
                     success_counter +=iters
                 else:
                     fail_counter += iters
-            print("The success percentage is : "+ str(float(success)*100/float(numruns)))
-            print("Average Iters in success : "+ str(float(success_counter)/float(numruns)))
-            print("Average Iters in failure : "+ str(float(fail_counter)/float(numruns)))
+            print(len(all_boards))
+            print(success)
+            print(len(all_boards) - success)
+            print(fail_counter)
+            print("The success percentage is : "+ str(float(success)*100/float(len(all_boards))))
+            print("Average Iters in success : "+ str(float(success_counter)/float(success)))
+            print("Average Iters in failure : "+ str(float(fail_counter)/(len(all_boards)- success)))
 
 
         if rrestart == 1:

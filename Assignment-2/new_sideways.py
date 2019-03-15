@@ -3,6 +3,8 @@
 from heuristics.heuristic import hofx
 import random
 from heuristics.printqueens import printqueens
+import copy
+
 
 
 
@@ -26,7 +28,7 @@ def calclow(hofxmat,n):
 
     return lowcoords,low
 
-def sidewaysascent(n):
+def sidewaysascent(n,printme = False):
     board = [[0 for i in range(n)] for j in range(n)]
     all_queens = []
     queenhash = {}
@@ -37,7 +39,10 @@ def sidewaysascent(n):
         all_queens.append((i,insertindex))
         queenhash[i] = insertindex
 
-    printqueens(board,all_queens,n)
+    first_board = copy.deepcopy(board)
+
+    if printme == True:
+        printqueens(board,all_queens,n)
 
     hofxmat,myhof = hofx(board,all_queens,n)
     #print(hofxmat,myhof)
@@ -49,16 +54,17 @@ def sidewaysascent(n):
     #print(low,lowi,lowj)
     count = 0
     total_count = 0
-    while(low <= myhof and count < 400 and myhof>0):
+    while(low <= myhof and count < 200 and myhof>0):
         current_j = queenhash[lowi]
         board[lowi][current_j] = 0
         board[lowi][lowj] = "Q"
         queenhash[lowi] = lowj
 
-        print("new maxima")
-        print(low)
-        print("current maxima")
-        print(myhof)
+        if printme == True:
+            print("new maxima")
+            print(low)
+            print("current maxima")
+            print(myhof)
         #print("where my queens are now")
         #print(all_queens)
         #print("where i need to move them")
@@ -68,8 +74,9 @@ def sidewaysascent(n):
         all_queens.remove((lowi,current_j))
         all_queens.append((lowi,lowj))
 
-        printqueens(board,all_queens,n)
-        print("\n")
+        if printme == True:
+            printqueens(board,all_queens,n)
+            print("\n")
 
         hofxmat,myhof = hofx(board,all_queens,n)
         lowcoords,low = calclow(hofxmat,n)
@@ -87,9 +94,10 @@ def sidewaysascent(n):
     
 
     #print(myhof)
-    print("current score : :" + str(myhof))
-    print("total count of iterations: " + str(total_count))
-    return myhof,total_count
+    if printme == True:
+        print("current score : :" + str(myhof))
+        print("total count of iterations: " + str(total_count))
+    return myhof,total_count,first_board
 
 
 
