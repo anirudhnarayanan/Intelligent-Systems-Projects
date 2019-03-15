@@ -131,16 +131,16 @@ def sidewaysascent(n):
         mylowcoords[(lowi,lowj)] = 1
         queenhash[lowi] = lowj
 
-        print("new best score")
+        print("new maxima")
         print(low)
-        print("current score")
+        print("current maxima")
         print(myhof)
-        print("where my queens are now")
-        print(all_queens)
-        print("where i need to move them")
-        print(lowi,lowj)
-        print("the one i am moving")
-        print(lowi,current_j)
+        #print("where my queens are now")
+        #print(all_queens)
+        #print("where i need to move them")
+        #print(lowi,lowj)
+        #print("the one i am moving")
+        #print(lowi,current_j)
         all_queens.remove((lowi,current_j))
         all_queens.append((lowi,lowj))
         board = tempboard

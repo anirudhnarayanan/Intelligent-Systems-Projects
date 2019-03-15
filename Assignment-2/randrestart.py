@@ -21,11 +21,11 @@ def randrestart(n,sideways = False):
 
         numiters +=1
 
-    print(numiters)
-    print("my iters")
-    print(iters)
-    print(total_iters)
-    print(array_iters)
+    #print(numiters)
+    #print("my iters")
+    #print(iters)
+    #print(total_iters)
+    #print(array_iters)
     return numiters,float(total_iters)
 
 

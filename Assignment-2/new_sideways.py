@@ -55,16 +55,16 @@ def sidewaysascent(n):
         board[lowi][lowj] = "Q"
         queenhash[lowi] = lowj
 
-        print("new best score")
+        print("new maxima")
         print(low)
-        print("current score")
+        print("current maxima")
         print(myhof)
-        print("where my queens are now")
-        print(all_queens)
-        print("where i need to move them")
-        print(lowi,lowj)
-        print("the one i am moving")
-        print(lowi,current_j)
+        #print("where my queens are now")
+        #print(all_queens)
+        #print("where i need to move them")
+        #print(lowi,lowj)
+        #print("the one i am moving")
+        #print(lowi,current_j)
         all_queens.remove((lowi,current_j))
         all_queens.append((lowi,lowj))
 
@@ -86,7 +86,9 @@ def sidewaysascent(n):
 
     
 
-    print(myhof)
+    #print(myhof)
+    print("current score : :" + str(myhof))
+    print("total count of iterations: " + str(total_count))
     return myhof,total_count
 
 
@@ -94,7 +96,7 @@ def sidewaysascent(n):
 if __name__ == "__main__":
     import sys
     #success=0
-    print(sidewaysascent(8))
+    sidewaysascent(8)
     #for i in range(1000):
     #    success+=1 if steepestascent(8) == 0 else 0
 
