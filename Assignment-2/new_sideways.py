@@ -95,7 +95,7 @@ def sidewaysascent(n,printme = False):
 
     #print(myhof)
     if printme == True:
-        print("current score :" + str(myhof))
+        print("current maxima :" + str(myhof))
         print("total count of iterations: " + str(total_count))
         
         if myhof == 0:

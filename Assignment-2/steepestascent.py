@@ -30,7 +30,7 @@ def steepestascent(n,printme = True):
         queenhash[i] = insertindex
 
     
-    if not printme:
+    if printme:
         printqueens(board,all_queens,n)
 
     hofxmat,myhof = hofx(board,all_queens,n)

@@ -48,8 +48,12 @@ if __name__ == "__main__":
             success_counter = 0
             fail_counter = 0
             mycount = 0
+            printed = True
             for i in range(numruns):
                 printme = True if i<4 else False 
+                if i > 4 and printed:
+                    print("please wait for finishing hill climbing")
+                    printed = False
                 mypass,iters = steepestascent(n,printme)
                 success+= 1 if mypass == 0 else 0
                 if mypass == 0:
@@ -87,9 +91,13 @@ if __name__ == "__main__":
             all_boards = []
             times = 4
             mytime=0
+            printed = True
             for i in range(numruns):
                 printme = True if mytime<4 else False
                 mypass,iters,board = sidewaysascent(n,printme)
+                if mytime > 4 and printed:
+                    print("Please wait for hill climbing to finish")
+                    printed = False
                 mytime+=1
                 all_boards.append(board)
                 success+= 1 if mypass == 0 else 0
