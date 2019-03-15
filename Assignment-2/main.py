@@ -105,10 +105,6 @@ if __name__ == "__main__":
                     success_counter +=iters
                 else:
                     fail_counter += iters
-            print(len(all_boards))
-            print(success)
-            print(len(all_boards) - success)
-            print(fail_counter)
             print("The success percentage is : "+ str(float(success)*100/float(len(all_boards))))
             print("Average Iters in success : "+ str(float(success_counter)/float(success)))
             if len(all_boards) == success:

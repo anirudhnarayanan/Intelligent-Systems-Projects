@@ -54,7 +54,7 @@ def sidewaysascent(n,printme = False):
     #print(low,lowi,lowj)
     count = 0
     total_count = 0
-    while(low <= myhof and count < 200 and myhof>0):
+    while(low <= myhof and count < 400 and myhof>0):
         current_j = queenhash[lowi]
         board[lowi][current_j] = 0
         board[lowi][lowj] = "Q"
