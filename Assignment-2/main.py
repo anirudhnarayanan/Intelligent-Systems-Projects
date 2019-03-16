@@ -62,8 +62,17 @@ if __name__ == "__main__":
                     fail_counter += iters
 
             print("The success percentage is : "+ str(float(success)*100/float(numruns)))
-            print("Average Iters in success : "+ str(float(success_counter)/float(numruns)))
-            print("Average Iters in failure : "+ str(float(fail_counter)/float(numruns)))
+            print("Failure Rate: " + str(100.0 - float(success)*100/float(numruns) ))
+
+            if success == 0:
+                print("Average iters in success: 0 (no success)")
+            else:
+                print("Average Iters in success : "+ str(float(success_counter)/float(success)))
+
+            if numruns == success:
+                print("Average Iterations in Failure: 0 (No failure)")
+            else:
+                print("Average Iters in failure : "+ str(float(fail_counter)/(float(numruns)- float(success))))
         
 
         if rrestart == 1:
@@ -106,7 +115,11 @@ if __name__ == "__main__":
                 else:
                     fail_counter += iters
             print("The success percentage is : "+ str(float(success)*100/float(len(all_boards))))
-            print("Average Iters in success : "+ str(float(success_counter)/float(success)))
+            print("Failure Rate: " + str(100.0 - float(success)*100/float(numruns) ))
+            if success == 0:
+                print("Average iters in success: 0 (no success)")
+            else:
+                print("Average Iters in success : "+ str(float(success_counter)/float(success)))
             if len(all_boards) == success:
                 print("Average Iterations in Failure: 0 (No failure)")
             else:
