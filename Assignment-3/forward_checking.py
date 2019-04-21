@@ -44,9 +44,9 @@ def getcolors(states,mystatedict):
 
     return listcol
 
-def gencols(states,i,numcolors):
+def gencols(states,i,numcolors,colors):
     tlist = []
-    colors = random_color(numcolors)
+    #colors = random_color(numcolors)
     for j in range(numcolors):
         tlist.append(Node(colors[j],states[i]))
 
@@ -63,7 +63,12 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
             return 1
-        curstate.next[i].next = gencols(states,num+1,numcolors)
+
+        temp_colorlist = colorlist.copy()
+        remove_colors = getcolors(states[num+1],mystatedict)
+        #temp_colorlist = temp_colorlist - remove_colors
+        temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
+        curstate.next[i].next = gencols(states,num+1,numcolors,temp_colorlist)
 
 
         #mystatedict[curstate.next[i].next[0].myname] =   
