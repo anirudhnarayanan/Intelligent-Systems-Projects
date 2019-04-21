@@ -62,7 +62,7 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
-            return 1
+            return 1,mystatedict
 
         temp_colorlist = colorlist.copy()
         remove_colors = getcolors(states[num+1],mystatedict)
@@ -74,12 +74,12 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
         #mystatedict[curstate.next[i].next[0].myname] =   
 
         ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
-        if ans == 1:
-            return 1
+        if ans[0] == 1:
+            return 1,mystatedict
 
         continue
 
-    return 0 
+    return 0,mystatedict 
 
 
 def init(states,statedict,numcolors):
@@ -101,7 +101,7 @@ def init(states,statedict,numcolors):
     
     
 if __name__ == "__main__":
-    numcolors = 4
+    numcolors = 3
     init_colors(numcolors)
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
@@ -165,7 +165,7 @@ if __name__ == "__main__":
 
     states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
-    """
+    
     states=['wa','nt','q','nsw','v','sa']
 
     statedict  ={
@@ -176,7 +176,7 @@ if __name__ == "__main__":
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
 
-    """
+    
     mystatedict = {}
     #print(states[41])
     #random.shuffle(states)

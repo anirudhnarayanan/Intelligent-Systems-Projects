@@ -70,7 +70,7 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
 
         ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
         if ans == 1:
-            return 1
+            return 1,mystatedict
 
         continue
 
