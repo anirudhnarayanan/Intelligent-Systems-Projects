@@ -3,7 +3,8 @@
 import random
 from Node import Node
 import pdb
-from queue import PriorityQueue
+import copy
+#from queue import PriorityQueue
 
 
 colorlist = []
@@ -43,12 +44,13 @@ def getcolors(states,mystatedict):
     for i in states:
         listcol.append(mystatedict.get(i,""))
 
+    #print(listcol)
     return listcol
 
 def gencols(states,i,numcolors,colors):
     tlist = []
     #colors = random_color(numcolors)
-    print(states[i][1])
+    #print(states[i][1])
     for j in range(len(states[i][0])):
         tlist.append(Node(states[i][0][j],states[i][1]))
 
@@ -63,7 +65,12 @@ def pick_next(states,statedict,mystatedict):
 
 def update_states(states,mystatedict,statedict):
     for i in states:
+        #if i[1] == "nsw":
+        #pdb.set_trace()
         tempstates = []
+        if i[1] in mystatedict:
+            i[0] = [mystatedict[i[1]]]
+            continue
         for j in getcolors(statedict[i[1]],mystatedict):
             if j in i[0]:
                 i[0].remove(j)
@@ -73,6 +80,7 @@ def update_states(states,mystatedict,statedict):
 def dfs(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
     for i in range(len(curstate.next)):
+        tempstates = copy.deepcopy(states)
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")
@@ -85,12 +93,16 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
         temp_colorlist = colorlist.copy()
         #remove_colors = getcolors(states[num+1],mystatedict)
         #temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
-        update_states(states,mystatedict,statedict)
-        next_index = pick_next(states,statedict,mystatedict)
+        update_states(tempstates,mystatedict,statedict)
+        next_index = pick_next(tempstates[num:],statedict,mystatedict)
         if next_index is None:
             next_index = num+1
-        states[num+1],states[next_index] = states[next_index],states[num+1]
-        curstate.next[i].next = gencols(states,num+1,numcolors,temp_colorlist)
+        #else:
+        #    mystatedict[states[next_index[1]]] = states[next_index[0][0]]
+
+
+        states[num+1],states[next_index] = tempstates[next_index],states[num+1]
+        curstate.next[i].next = gencols(tempstates,num+1,numcolors,temp_colorlist)
 
 
         #mystatedict[curstate.next[i].next[0].myname] =   
@@ -124,7 +136,7 @@ def init(states,statedict,numcolors):
     
     
 if __name__ == "__main__":
-    numcolors = 5
+    numcolors = 2
     init_colors(numcolors)
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
@@ -188,7 +200,7 @@ if __name__ == "__main__":
 
     states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
-    
+     
     states=['wa','nt','q','nsw','v','sa']
 
     statedict  ={
@@ -199,7 +211,7 @@ if __name__ == "__main__":
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
 
-
+    
     #mod_states = PriorityQueue()
 
 
@@ -211,7 +223,7 @@ if __name__ == "__main__":
 
 
     for i in range(len(states)):
-        mod_states.append((colorlist,states[i]))
+        mod_states.append([colorlist.copy(),states[i]])
 
 
     

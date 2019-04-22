@@ -101,7 +101,7 @@ def init(states,statedict,numcolors):
     
     
 if __name__ == "__main__":
-    numcolors = 3
+    numcolors = 4
     init_colors(numcolors)
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
@@ -165,6 +165,7 @@ if __name__ == "__main__":
 
     states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
+    """
     
     states=['wa','nt','q','nsw','v','sa']
 
@@ -175,7 +176,7 @@ if __name__ == "__main__":
         'q':['nt','sa','nsw'],
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
-
+    """
     
     mystatedict = {}
     #print(states[41])
