@@ -3,10 +3,14 @@
 import random
 from Node import Node
 import pdb
+from mapcolor import colormap
+import time
 
 
 colorlist = []
 
+
+all_states = []
 def init_colors(n):
     for i in range(n):
         colorlist.append(random.randint(0,255))
@@ -54,6 +58,8 @@ def gencols(states,i,numcolors,colors):
 
 def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
+    #colormap(mystatedict)
+    all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
@@ -103,6 +109,8 @@ def init(states,statedict,numcolors):
 if __name__ == "__main__":
     numcolors = 4
     init_colors(numcolors)
+
+    colorlist = ["red","blue","green","black"]
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
 
@@ -186,12 +194,25 @@ if __name__ == "__main__":
     root = init(states,statedict,numcolors)
 
     answer = forward_checking(mystatedict,statedict,numcolors,root,states,0)
-
+    count = 0 
     for key in answer[1]:
+        count+=1
         if answer[1][key] in getcolors(statedict[key],mystatedict):
             print("oops")
 
 
+
+    print(len(all_states))
+
+    for i in range(0,len(all_states),50000):
+        colormap(all_states[i])
+
+
+    colormap(mystatedict)
+
+    time.sleep(10)
+    
+    print(count)
     print("VERIFIED ANSWER")
 
     print(answer)
