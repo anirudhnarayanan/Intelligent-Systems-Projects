@@ -44,9 +44,9 @@ def getcolors(states,mystatedict):
 
     return listcol
 
-def gencols(states,i,numcolors):
+def gencols(states,i,numcolors,colors):
     tlist = []
-    colors = random_color(numcolors)
+    #colors = random_color(numcolors)
     for j in range(numcolors):
         tlist.append(Node(colors[j],states[i]))
 
@@ -62,19 +62,24 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
-            return 1
-        curstate.next[i].next = gencols(states,num+1,numcolors)
+            return 1,mystatedict
+
+        temp_colorlist = colorlist.copy()
+        #remove_colors = getcolors(states[num+1],mystatedict)
+        #temp_colorlist = temp_colorlist - remove_colors
+        #temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
+        curstate.next[i].next = gencols(states,num+1,numcolors,temp_colorlist)
 
 
         #mystatedict[curstate.next[i].next[0].myname] =   
 
         ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
-        if ans == 1:
+        if ans[0] == 1:
             return 1,mystatedict
 
         continue
 
-    return 0 
+    return 0,mystatedict 
 
 
 def init(states,statedict,numcolors):
@@ -161,6 +166,7 @@ if __name__ == "__main__":
     states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
     """
+    
     states=['wa','nt','q','nsw','v','sa']
 
     statedict  ={
@@ -170,8 +176,8 @@ if __name__ == "__main__":
         'q':['nt','sa','nsw'],
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
-
     """
+    
     mystatedict = {}
     #print(states[41])
     #random.shuffle(states)
@@ -179,5 +185,14 @@ if __name__ == "__main__":
     #print(states)
     root = init(states,statedict,numcolors)
 
-    print(dfs(mystatedict,statedict,numcolors,root,states,0))
+    answer = dfs(mystatedict,statedict,numcolors,root,states,0)
+
+    for key in answer[1]:
+        if answer[1][key] in getcolors(statedict[key],mystatedict):
+            print("oops")
+
+
+    print("VERIFIED ANSWER")
+
+    print(answer)
 
