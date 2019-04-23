@@ -3,7 +3,7 @@
 import random
 from Node import Node
 import pdb
-#from mapcolor import colormap
+from mapcolor import colormap
 import time
 
 
@@ -11,6 +11,7 @@ colorlist = []
 
 
 all_states = []
+backtracks = 0
 
 def pick_big_state(legal_colors):
     for k in sorted(legal_colors, key=lambda k: len(legal_colors[k]), reverse=True):
@@ -72,7 +73,7 @@ def gencols(states,i,numcolors,colors):
 def forward_checking(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
     #pdb.set_trace()
     #colormap(mystatedict)
-    #all_states.append(mystatedict.copy())
+    all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
         temp_legal_colors = legal_colors.copy()
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
@@ -85,6 +86,8 @@ def forward_checking(mystatedict,statedict,numcolors,curstate,states,num,legal_c
         if num == len(states) - 1:
             return 1,mystatedict
 
+        
+        backtracks +=1
         update_neighbors(curstate.next[0].myname,temp_legal_colors,statedict,curstate.next[i].mycolor,states)
         #big_statename = pick_big_state(legal_colors)
         
@@ -244,18 +247,18 @@ if __name__ == "__main__":
 
 
 
-    #print(len(all_states))
+    print(len(all_states))
 
-    #for i in range(0,len(all_states),50000):
-        #colormap(all_states[i])
+    for i in range(0,len(all_states),50000):
+        colormap(all_states[i])
 
 
-    #colormap(mystatedict)
-
+    colormap(mystatedict)
     time.sleep(10)
-    
-    print(count)
     print("VERIFIED ANSWER")
-
     print(answer)
+    print("NUMBER OF BACKTRACKS: "+ str(backtracks))
+    print("TIME OF EXECUTION: " + str(end_time - start_time) + "seconds") 
+
+    
 

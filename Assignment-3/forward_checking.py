@@ -9,6 +9,7 @@ import time
 
 colorlist = []
 
+backtracks = 0
 
 all_states = []
 def init_colors(n):
@@ -83,6 +84,7 @@ def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
         if ans[0] == 1:
             return 1,mystatedict
 
+        backtracks +=1
         continue
 
     return 0,mystatedict 
@@ -193,7 +195,9 @@ if __name__ == "__main__":
     #print(states)
     root = init(states,statedict,numcolors)
 
+    start_time = time.time()
     answer = forward_checking(mystatedict,statedict,numcolors,root,states,0)
+    end_time = time.time()
     count = 0 
     for key in answer[1]:
         count+=1
@@ -201,6 +205,10 @@ if __name__ == "__main__":
             print("oops")
 
 
+    print("VERIFIED ANSWER")
+    print(answer)
+    print("NUMBER OF BACKTRACKS: "+ str(backtracks))
+    print("TIME OF EXECUTION: " + str(end_time - start_time) + "seconds") 
 
     print(len(all_states))
 
@@ -212,8 +220,5 @@ if __name__ == "__main__":
 
     time.sleep(10)
     
-    print(count)
-    print("VERIFIED ANSWER")
 
-    print(answer)
 

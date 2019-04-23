@@ -3,9 +3,13 @@
 import random
 from Node import Node
 import pdb
+from mapcolor import colormap
+import time
 
 
 colorlist = []
+all_states = []
+backtracks = 0
 
 def init_colors(n):
     for i in range(n):
@@ -59,6 +63,10 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")
             continue
+       
+
+        
+    all_states.append(mystatedict.copy())
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
@@ -76,6 +84,9 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
         ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
         if ans[0] == 1:
             return 1,mystatedict
+        
+
+        backtracks+=1
 
         continue
 
@@ -184,15 +195,24 @@ if __name__ == "__main__":
 
     #print(states)
     root = init(states,statedict,numcolors)
-
+    
+    start_time = time.time()
     answer = dfs(mystatedict,statedict,numcolors,root,states,0)
 
     for key in answer[1]:
         if answer[1][key] in getcolors(statedict[key],mystatedict):
             print("oops")
 
-
+    end_time = time.time()
     print("VERIFIED ANSWER")
 
     print(answer)
+
+    print("NUMBER OF BACKTRACKS: "+ str(backtracks))
+    print("TIME OF EXECUTION: " + str(end_time - start_time) + "seconds") 
+
+
+    for i in range(0,len(all_states),50000):
+        colormap(all_states[i])
+
 
