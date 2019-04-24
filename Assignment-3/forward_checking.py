@@ -63,6 +63,7 @@ def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
     global backtracks
     all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
+        time.sleep(0.000002)
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")

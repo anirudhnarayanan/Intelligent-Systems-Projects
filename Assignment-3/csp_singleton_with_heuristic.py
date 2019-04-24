@@ -31,10 +31,6 @@ from copy import deepcopy
 
 
 from mapcolor import colormap
-import time
-
-
-full = []
 class State:
     def __init__(self,name,domain,status="not visited"):
         self.name=name
@@ -256,9 +252,7 @@ def csp(state_objects,domain,states_and_colors):
             state.status="visited"
             state.color_name=color
             states_and_colors[state.name]=color
-            full.append(states_and_colors)
-            #colormap(states_and_colors)
-
+            colormap(states_and_colors)
             updated_states=update_colors(state,color)
             print("total updated states",len(updated_states))
             singleton_states,status=singleton_propagtion(state_objects)
@@ -499,9 +493,6 @@ k={'Ohio': 'blue', 'Hawaii': 'blue', 'Vermont': 'blue', 'Maine': 'blue', 'Tennes
 'Wyoming': 'red', 'California': 'red', 'Utah': 'blue', 'Texas': 'orange', 'Pennsylvania': 'red',
  'Georgia': 'orange'}
 print(list(k.keys()))
-
-
-
 
 
 
