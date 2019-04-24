@@ -70,7 +70,8 @@ def gencols(states,i,numcolors,colors):
 
     return tlist
 
-def forward_checking(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
+def heuristic_included(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
+    global backtracks
     #pdb.set_trace()
     #colormap(mystatedict)
     all_states.append(mystatedict.copy())
@@ -115,7 +116,7 @@ def forward_checking(mystatedict,statedict,numcolors,curstate,states,num,legal_c
 
 
 
-        ans = forward_checking(mystatedict,statedict,numcolors,curstate.next[i],states,num+1,temp_legal_colors)
+        ans = heuristic_included(mystatedict,statedict,numcolors,curstate.next[i],states,num+1,temp_legal_colors)
         if ans[0] == 1:
             return 1,mystatedict
 
@@ -210,7 +211,10 @@ if __name__ == "__main__":
 
     #states = ['North Dakota', 'North Carolina', 'Connecticut', 'Utah', 'Nebraska', 'New Jersey', 'South Carolina', 'Maine', 'Minnesota', 'Colorado', 'Kansas', 'Indiana', 'Florida', 'Tennessee', 'Idaho', 'New York', 'Michigan', 'Massachusetts', 'Oklahoma', 'New Hampshire', 'Ohio', 'Mississippi', 'Arizona', 'Montana', 'Pennsylvania', 'Virginia', 'Louisiana', 'Kentucky', 'Rhode Island', 'Alabama', 'South Dakota', 'Wyoming', 'New Mexico', 'Wisconsin', 'Missouri', 'Maryland', 'West Virginia', 'Illinois', 'Georgia', 'Vermont', 'Washington', 'California', 'Nevada', 'Texas', 'Iowa', 'Arkansas', 'Oregon', 'Delaware']
 
-    states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
+    #states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
+
+    states = ['Illinois', 'Oklahoma', 'California', 'Utah', 'Wyoming', 'Missouri', 'Michigan', 'Texas', 'Iowa', 'Delaware', 'Tennessee', 'Maryland', 'Kentucky', 'Montana', 'Minnesota', 'Connecticut', 'Louisiana', 'West Virginia', 'Pennsylvania', 'Nebraska', 'Kansas', 'Indiana', 'Rhode Island', 'Arizona', 'Florida', 'Massachusetts', 'South Dakota', 'Nevada', 'South Carolina', 'Ohio', 'New Hampshire', 'Idaho', 'Washington', 'Colorado', 'Oregon', 'New Jersey', 'Mississippi', 'Arkansas', 'Vermont', 'Wisconsin', 'Alabama', 'Georgia', 'Maine', 'New Mexico', 'North Carolina', 'New York', 'Virginia', 'North Dakota']
+
 
 
     legal_colors = []
@@ -238,7 +242,10 @@ if __name__ == "__main__":
     #print(states)
     root = init(states,statedict,numcolors)
 
-    answer = forward_checking(mystatedict,statedict,numcolors,root,states,0,legal_colors)
+    start_time = time.time()
+    answer = heuristic_included(mystatedict,statedict,numcolors,root,states,0,legal_colors)
+
+    end_time = time.time()
     count = 0 
     for key in answer[1]:
         count+=1
@@ -249,7 +256,7 @@ if __name__ == "__main__":
 
     print(len(all_states))
 
-    for i in range(0,len(all_states),50000):
+    for i in range(0,len(all_states),200):
         colormap(all_states[i])
 
 

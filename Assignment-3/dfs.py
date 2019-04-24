@@ -58,6 +58,7 @@ def gencols(states,i,numcolors,colors):
 
 def dfs(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
+    global backtracks
     for i in range(len(curstate.next)):
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
@@ -66,7 +67,7 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
        
 
         
-    all_states.append(mystatedict.copy())
+        all_states.append(mystatedict.copy())
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
@@ -86,10 +87,10 @@ def dfs(mystatedict,statedict,numcolors,curstate,states,num):
             return 1,mystatedict
         
 
-        backtracks+=1
 
         continue
 
+    backtracks+=1
     return 0,mystatedict 
 
 
@@ -116,6 +117,7 @@ if __name__ == "__main__":
     init_colors(numcolors)
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
+    colorlist = ["red","blue","green","black"]
 
     statedict = {
 'Alabama':['Florida', 'Georgia', 'Mississippi', 'Tennessee'],
@@ -214,5 +216,10 @@ if __name__ == "__main__":
 
     for i in range(0,len(all_states),50000):
         colormap(all_states[i])
+
+
+    colormap(mystatedict)
+
+    time.sleep(10)
 
 

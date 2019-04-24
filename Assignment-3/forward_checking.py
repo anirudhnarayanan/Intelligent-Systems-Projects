@@ -60,6 +60,7 @@ def gencols(states,i,numcolors,colors):
 def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
     #colormap(mystatedict)
+    global backtracks
     all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
@@ -84,8 +85,9 @@ def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
         if ans[0] == 1:
             return 1,mystatedict
 
-        backtracks +=1
         continue
+        
+    backtracks +=1
 
     return 0,mystatedict 
 
@@ -164,18 +166,24 @@ if __name__ == "__main__":
 'Washington':['Idaho', 'Oregon'],
 'West Virginia':['Kentucky', 'Maryland', 'Ohio', 'Pennsylvania', 'Virginia'],
 'Wisconsin':['Illinois', 'Iowa', 'Michigan', 'Minnesota'],
-'Wyoming':['Colorado', 'Idaho', 'Montana', 'Nebraska', 'South Dakota', 'Utah']
+'Wyoming':['Colorado', 'Idaho', 'Montana', 'Nebraska', 'South Dakota', 'Utah'],
+"Hawai":[],
+"Alaska":[]
 }
 
-    states = ['Alabama','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine',"Maryland",'Massachusetts',
-        'Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon',
-        'Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
-    #states = ['North Dakota', 'North Carolina', 'Connecticut', 'Utah', 'Nebraska', 'New Jersey', 'South Carolina', 'Maine', 'Minnesota', 'Colorado', 'Kansas', 'Indiana', 'Florida', 'Tennessee', 'Idaho', 'New York', 'Michigan', 'Massachusetts', 'Oklahoma', 'New Hampshire', 'Ohio', 'Mississippi', 'Arizona', 'Montana', 'Pennsylvania', 'Virginia', 'Louisiana', 'Kentucky', 'Rhode Island', 'Alabama', 'South Dakota', 'Wyoming', 'New Mexico', 'Wisconsin', 'Missouri', 'Maryland', 'West Virginia', 'Illinois', 'Georgia', 'Vermont', 'Washington', 'California', 'Nevada', 'Texas', 'Iowa', 'Arkansas', 'Oregon', 'Delaware']
+    #states = ['Illinois', 'Oklahoma', 'California', 'Utah', 'Wyoming', 'Missouri', 'Michigan', 'Texas', 'Iowa', 'Delaware', 'Tennessee', 'Maryland', 'Kentucky', 'Montana', 'Minnesota', 'Connecticut', 'Louisiana', 'West Virginia', 'Pennsylvania', 'Nebraska', 'Kansas', 'Indiana', 'Rhode Island', 'Arizona', 'Florida', 'Massachusetts', 'South Dakota', 'Nevada', 'South Carolina', 'Ohio', 'New Hampshire', 'Idaho', 'Washington', 'Colorado', 'Oregon', 'New Jersey', 'Mississippi', 'Arkansas', 'Vermont', 'Wisconsin', 'Alabama', 'Georgia', 'Maine', 'New Mexico', 'North Carolina', 'New York', 'Virginia', 'North Dakota']
 
-    states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
+    states = ['New Hampshire', 'Oklahoma', 'Tennessee', 'Illinois', 'New Mexico', 'Kentucky', 'West Virginia', 'Maryland', 'Maine', 'Wisconsin', 'Missouri', 'Minnesota', 'Montana', 'Massachusetts', 'South Carolina', 'North Dakota', 'Pennsylvania', 'Arizona', 'South Dakota', 'Ohio', 'Oregon', 'Alabama', 'Indiana', 'Rhode Island', 'Virginia', 'Idaho', 'Nevada', 'Nebraska', 'New York', 'Utah', 'Michigan', 'Kansas', 'Florida', 'Connecticut', 'Iowa', 'Wyoming', 'Louisiana', 'California', 'Vermont', 'Texas', 'Georgia', 'New Jersey', 'North Carolina', 'Washington', 'Delaware', 'Colorado', 'Mississippi', 'Arkansas']
 
     """
+    states = ['Kansas', 'New Hampshire', 'Idaho', 'Louisiana', 'New Jersey', 'Arkansas', 'Kentucky', 'Maine', 'Minnesota', 'Missouri',
+            'West Virginia', 'North Carolina', 'Massachusetts', 'Michigan', 'Indiana', 'Illinois', 'Virginia', 'Oklahoma', 'Montana',
+            'North Dakota', 'Texas', 'Colorado', 'South Carolina', 'Maryland', 'California', 'New York', 'Florida', 'Vermont', 'Utah',
+            'Georgia', 'Oregon', 'Wisconsin', 'Rhode Island', 'Nebraska', 'New Mexico', 'Mississippi', 'Alabama', 'Nevada', 'Tennessee',
+            'Iowa','South Dakota', 'Ohio', 'Pennsylvania', 'Washington', 'Wyoming', 'Arizona', 'Delaware', 'Connecticut']
+
+
     
     states=['wa','nt','q','nsw','v','sa']
 
@@ -186,11 +194,16 @@ if __name__ == "__main__":
         'q':['nt','sa','nsw'],
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
-    """
     
+    
+    """
+
+    #states = ['Ohio', 'Hawai', 'Vermont', 'Maine', 'Tennessee', 'Oklahoma', 'Colorado', 'Alabama', 'Oregon', 'Minnesota', 'New Mexico', 'Mississippi', 'Kansas', 'New Hampshire', 'Louisiana', 'Rhode Island', 'Montana', 'Wisconsin', 'Michigan', 'Arkansas', 'Maryland', 'Missouri', 'Massachusetts', 'North Dakota', 'Nevada', 'South Dakota', 'Illinois', 'Washington', 'Virginia', 'Indiana', 'Alaska', 'Connecticut', 'North Carolina', 'New York', 'New Jersey', 'Iowa', 'Kentucky', 'South Carolina', 'West Virginia', 'Idaho', 'Florida', 'Delaware', 'Nebraska', 'Arizona', 'Wyoming', 'California', 'Utah', 'Texas', 'Pennsylvania', 'Georgia']
     mystatedict = {}
     #print(states[41])
     #random.shuffle(states)
+
+    print(states)
 
     #print(states)
     root = init(states,statedict,numcolors)
@@ -212,7 +225,7 @@ if __name__ == "__main__":
 
     print(len(all_states))
 
-    for i in range(0,len(all_states),50000):
+    for i in range(0,len(all_states),2000):
         colormap(all_states[i])
 
 
