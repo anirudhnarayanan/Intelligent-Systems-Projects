@@ -7,43 +7,11 @@ from mapcolor import colormap
 import time
 
 
-
-
 colorlist = []
 
 backtracks = 0
 
 all_states = []
-
-
-class State:
-    def __init__(self,name,domain,status="not visited"):
-        self.name=name
-        self.neighbours=None
-        self.color_name=None
-        self.status=status
-        self.domain=domain
-        self.singleton=False
-
-    def set_neighbours(self,neighbours):
-        self.neighbours=neighbours
-    def get_neighbours(self):
-        return self.neighbours
-    def set_color(self,color_name):
-        self.color_name=color_name
-    def set_parent(self,parent):
-        self.parent=parent
-    def set_domain(self,domain):
-        self.domain=domain
-    def get_domain(self):
-        return self.domain
-    def is_singleton(self):
-        if self.singleton:
-            return self.singleton
-        return False
-
-
-
 def init_colors(n):
     for i in range(n):
         colorlist.append(random.randint(0,255))
@@ -89,12 +57,13 @@ def gencols(states,i,numcolors,colors):
 
     return tlist
 
-def singleton(mystatedict,statedict,numcolors,curstate,states,num):
+def forward_checking(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
     #colormap(mystatedict)
     global backtracks
     all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
+        time.sleep(0.000002)
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")
@@ -113,7 +82,7 @@ def singleton(mystatedict,statedict,numcolors,curstate,states,num):
 
         #mystatedict[curstate.next[i].next[0].myname] =   
 
-        ans = singleton(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
+        ans = forward_checking(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
         if ans[0] == 1:
             return 1,mystatedict
 
@@ -241,7 +210,7 @@ if __name__ == "__main__":
     root = init(states,statedict,numcolors)
 
     start_time = time.time()
-    answer = singleton(mystatedict,statedict,numcolors,root,states,0)
+    answer = forward_checking(mystatedict,statedict,numcolors,root,states,0)
     end_time = time.time()
     count = 0 
     for key in answer[1]:

@@ -70,7 +70,7 @@ def gencols(states,i,numcolors,colors):
 
     return tlist
 
-def heuristic_included(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
+def dfs_heuristic_included(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
     global backtracks
     #pdb.set_trace()
     #colormap(mystatedict)
@@ -116,7 +116,7 @@ def heuristic_included(mystatedict,statedict,numcolors,curstate,states,num,legal
 
 
 
-        ans = heuristic_included(mystatedict,statedict,numcolors,curstate.next[i],states,num+1,temp_legal_colors)
+        ans = dfs_heuristic_included(mystatedict,statedict,numcolors,curstate.next[i],states,num+1,temp_legal_colors)
         if ans[0] == 1:
             return 1,mystatedict
 
@@ -246,7 +246,7 @@ if __name__ == "__main__":
     root = init(states,statedict,numcolors)
 
     start_time = time.time()
-    answer = heuristic_included(mystatedict,statedict,numcolors,root,states,0,legal_colors)
+    answer = dfs_heuristic_included(mystatedict,statedict,numcolors,root,states,0,legal_colors)
 
     end_time = time.time()
     count = 0 

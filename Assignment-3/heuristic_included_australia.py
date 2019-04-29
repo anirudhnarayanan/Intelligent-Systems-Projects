@@ -3,9 +3,27 @@
 import random
 from Node import Node
 import pdb
+from mapcolor import colormap
+import time
 
 
 colorlist = []
+
+
+all_states = []
+backtracks = 0
+
+def pick_big_state(legal_colors):
+    for k in sorted(legal_colors, key=lambda k: len(legal_colors[k]), reverse=True):
+        #print k
+        return k
+
+def update_neighbors(statechanged,legal_colors,statedict,color_assigned,states):
+    for state in statedict[statechanged]:
+            #print(state)
+            if color_assigned in list(filter(lambda x:x[0]==state,legal_colors))[0][1]:
+                list(filter(lambda x:x[0]==state,legal_colors))[0][1].remove(color_assigned)
+
 
 def init_colors(n):
     for i in range(n):
@@ -44,37 +62,67 @@ def getcolors(states,mystatedict):
 
     return listcol
 
-def gencols(states,i,numcolors):
+def gencols(states,i,numcolors,colors):
     tlist = []
-    colors = random_color(numcolors)
+    #colors = random_color(numcolors)
     for j in range(numcolors):
         tlist.append(Node(colors[j],states[i]))
 
     return tlist
 
-def dfs(mystatedict,statedict,numcolors,curstate,states,num):
+def heuristic_included(mystatedict,statedict,numcolors,curstate,states,num,legal_colors):
+    global backtracks
     #pdb.set_trace()
+    #colormap(mystatedict)
+    all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
+        temp_legal_colors = legal_colors.copy()
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
+
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")
             continue
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
-            return 1
-        curstate.next[i].next = gencols(states,num+1,numcolors)
+            return 1,mystatedict
+
+        
+        backtracks +=1
+        update_neighbors(curstate.next[0].myname,temp_legal_colors,statedict,curstate.next[i].mycolor,states)
+        #big_statename = pick_big_state(legal_colors)
+        
+        temp_legal_colors = sorted(temp_legal_colors,key=lambda x:len(x[1]))
+
+
+
+        #swap_ind = states.index(big_statename)
+
+        #states[num+1],states[swap_ind] = states[swap_ind],states[num+1]
+
+
+        temp_colorlist = colorlist.copy()
+        remove_colors = getcolors(temp_legal_colors[num+1][0],mystatedict)
+        #temp_colorlist = temp_colorlist - remove_colors
+        temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
+        curstate.next[i].next = gencols(states,num+1,numcolors,temp_colorlist)
 
 
         #mystatedict[curstate.next[i].next[0].myname] =   
 
-        ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
-        if ans == 1:
+
+
+
+
+
+
+        ans = heuristic_included(mystatedict,statedict,numcolors,curstate.next[i],states,num+1,temp_legal_colors)
+        if ans[0] == 1:
             return 1,mystatedict
 
         continue
 
-    return 0 
+    return 0,mystatedict 
 
 
 def init(states,statedict,numcolors):
@@ -98,8 +146,13 @@ def init(states,statedict,numcolors):
 if __name__ == "__main__":
     numcolors = 4
     init_colors(numcolors)
+
+    colorlist = ["red","blue","green","black"]
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
+
+
+
 
     statedict = {
 'Alabama':['Florida', 'Georgia', 'Mississippi', 'Tennessee'],
@@ -123,7 +176,7 @@ if __name__ == "__main__":
 'Massachusetts':['Connecticut', 'New Hampshire', 'New York', 'Rhode Island', 'Vermont'],
 'Michigan':['Illinois', 'Indiana', 'Minnesota', 'Ohio', 'Wisconsin'],
 'Minnesota':['Iowa', 'Michigan', 'North Dakota', 'South Dakota', 'Wisconsin'],
-'Mississippi':['Alabama', 'Arkanssas', 'Louisiana', 'Tennessee'],
+'Mississippi':['Alabama', 'Arkansas', 'Louisiana', 'Tennessee'],
 'Missouri':['Arkansas', 'Illinois', 'Iowa', 'Kansas', 'Kentucky', 'Nebraska', 'Oklahoma', 'Tennessee'],
 'Montana':['Idaho', 'North Dakota', 'South Dakota', 'Wyoming'],
 'Nebraska' :['Colorado', 'Iowa', 'Kansas', 'Missouri', 'South Dakota', 'Wyoming'],
@@ -160,7 +213,17 @@ if __name__ == "__main__":
 
     #states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
+    states = ['Illinois', 'Oklahoma', 'California', 'Utah', 'Wyoming', 'Missouri', 'Michigan', 'Texas', 'Iowa', 'Delaware', 'Tennessee', 'Maryland', 'Kentucky', 'Montana', 'Minnesota', 'Connecticut', 'Louisiana', 'West Virginia', 'Pennsylvania', 'Nebraska', 'Kansas', 'Indiana', 'Rhode Island', 'Arizona', 'Florida', 'Massachusetts', 'South Dakota', 'Nevada', 'South Carolina', 'Ohio', 'New Hampshire', 'Idaho', 'Washington', 'Colorado', 'Oregon', 'New Jersey', 'Mississippi', 'Arkansas', 'Vermont', 'Wisconsin', 'Alabama', 'Georgia', 'Maine', 'New Mexico', 'North Carolina', 'New York', 'Virginia', 'North Dakota']
+
+
+
+    legal_colors = []
+
+    for state in states:
+        legal_colors.append([state,colorlist.copy()])
+
     """
+    
     states=['wa','nt','q','nsw','v','sa']
 
     statedict  ={
@@ -170,14 +233,39 @@ if __name__ == "__main__":
         'q':['nt','sa','nsw'],
         'nsw':['q','v','sa'],
         'v':['sa','nsw']}
-
     """
+    
     mystatedict = {}
     #print(states[41])
-    random.shuffle(states)
+    #random.shuffle(states)
 
-    print(states)
+    #print(states)
     root = init(states,statedict,numcolors)
 
-    print(dfs(mystatedict,statedict,numcolors,root,states,0))
+    start_time = time.time()
+    answer = heuristic_included(mystatedict,statedict,numcolors,root,states,0,legal_colors)
+
+    end_time = time.time()
+    count = 0 
+    for key in answer[1]:
+        count+=1
+        if answer[1][key] in getcolors(statedict[key],mystatedict):
+            print("oops")
+
+
+
+    print(len(all_states))
+
+    for i in range(0,len(all_states),200):
+        colormap(all_states[i])
+
+
+    colormap(mystatedict)
+    time.sleep(10)
+    print("VERIFIED ANSWER")
+    print(answer)
+    print("NUMBER OF BACKTRACKS: "+ str(backtracks))
+    print("TIME OF EXECUTION: " + str(end_time - start_time) + "seconds") 
+
+    
 

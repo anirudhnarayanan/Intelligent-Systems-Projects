@@ -35,6 +35,7 @@ import time
 
 
 full = []
+backtracks = 0
 class State:
     def __init__(self,name,domain,status="not visited"):
         self.name=name
@@ -233,7 +234,7 @@ def singleton_reset(singleton_states,domain,colour):
     return "un sucessful"
     """
 def csp(state_objects,domain,states_and_colors):
-        
+        global backtracks 
         #print("domain:",domain)
             
         
@@ -251,12 +252,14 @@ def csp(state_objects,domain,states_and_colors):
         
         
         #state=un_assigned_states[0]
+        iter1 = 0
         for color in available_domain:
-            
+            iter1+=1 
             state.status="visited"
             state.color_name=color
             states_and_colors[state.name]=color
-            full.append(states_and_colors)
+            #full.append(states_and_colors)
+            #if iter1%100==0:
             #colormap(states_and_colors)
 
             updated_states=update_colors(state,color)
@@ -315,6 +318,7 @@ def csp(state_objects,domain,states_and_colors):
         
         #print(state.name,state.status)
         #state.color_name=None
+        backtracks+=1
         return "unsucessful"
         
             
@@ -448,6 +452,12 @@ def main():
     #print(state_objects[33].name,state_objects[33].domain)
     #print(singleton_propagtion(state_objects,"red"))
     print(st)
+    #for i in range(0,len(full),6000):
+    #    print(full[i])
+    #    colormap(full[i])
+
+
+    #time.sleep(10)
     """for state in state_objects:
         print(state.name," " ,state.domain)"""
 
@@ -455,15 +465,23 @@ def main():
     #print(color_validation(stat,"blue"))
     '''for state in state_objects:
         print(state.domain)'''
+    """
     for key in restriction_graph.keys():
         states = (restriction_graph[key])
-        color=st[key]
+        #color=st[key]
         for state in states:
             if st[state]==color:
                 print(key,state,color)
             else:
                 print("false")
+    """
+
+start_time = time.time()
 main()
+end_time = time.time()
+
+print("Time of execution = " + str(end_time- start_time) + " seconds")
+print("Number of Backtracks= " + str(backtracks))
         
 '''st1 = {'Oregon': 'blue', 'Delaware': 'blue', 'Arkansas': 'blue', 'Michigan': 'blue', 'Kentucky': 'blue',
  'North Dakota': 'blue', 'Wyoming': 'blue', 'Texas': 'green', 'Alabama': 'blue', 'Kansas': 'blue', 
@@ -499,6 +517,8 @@ k={'Ohio': 'blue', 'Hawaii': 'blue', 'Vermont': 'blue', 'Maine': 'blue', 'Tennes
 'Wyoming': 'red', 'California': 'red', 'Utah': 'blue', 'Texas': 'orange', 'Pennsylvania': 'red',
  'Georgia': 'orange'}
 print(list(k.keys()))
+
+
 
 
 

@@ -7,42 +7,9 @@ from mapcolor import colormap
 import time
 
 
-
-
 colorlist = []
-
-backtracks = 0
-
 all_states = []
-
-
-class State:
-    def __init__(self,name,domain,status="not visited"):
-        self.name=name
-        self.neighbours=None
-        self.color_name=None
-        self.status=status
-        self.domain=domain
-        self.singleton=False
-
-    def set_neighbours(self,neighbours):
-        self.neighbours=neighbours
-    def get_neighbours(self):
-        return self.neighbours
-    def set_color(self,color_name):
-        self.color_name=color_name
-    def set_parent(self,parent):
-        self.parent=parent
-    def set_domain(self,domain):
-        self.domain=domain
-    def get_domain(self):
-        return self.domain
-    def is_singleton(self):
-        if self.singleton:
-            return self.singleton
-        return False
-
-
+backtracks = 0
 
 def init_colors(n):
     for i in range(n):
@@ -89,38 +56,41 @@ def gencols(states,i,numcolors,colors):
 
     return tlist
 
-def singleton(mystatedict,statedict,numcolors,curstate,states,num):
+def dfs(mystatedict,statedict,numcolors,curstate,states,num):
     #pdb.set_trace()
-    #colormap(mystatedict)
     global backtracks
-    all_states.append(mystatedict.copy())
     for i in range(len(curstate.next)):
         mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if mystatedict.get(curstate.next[0].myname) in getcolors(statedict[curstate.next[0].myname],mystatedict):
             #print("continued")
             continue
+       
+
+        
+        all_states.append(mystatedict.copy())
 
         #mystatedict[curstate.next[0].myname] = curstate.next[i].mycolor   
         if num == len(states) - 1:
             return 1,mystatedict
 
         temp_colorlist = colorlist.copy()
-        remove_colors = getcolors(states[num+1],mystatedict)
+        #remove_colors = getcolors(states[num+1],mystatedict)
         #temp_colorlist = temp_colorlist - remove_colors
-        temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
+        #temp_colorlist = [x for x in temp_colorlist if x not in remove_colors]
         curstate.next[i].next = gencols(states,num+1,numcolors,temp_colorlist)
 
 
         #mystatedict[curstate.next[i].next[0].myname] =   
 
-        ans = singleton(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
+        ans = dfs(mystatedict,statedict,numcolors,curstate.next[i],states,num+1)
         if ans[0] == 1:
             return 1,mystatedict
+        
+
 
         continue
-        
-    backtracks +=1
 
+    backtracks+=1
     return 0,mystatedict 
 
 
@@ -145,10 +115,9 @@ def init(states,statedict,numcolors):
 if __name__ == "__main__":
     numcolors = 4
     init_colors(numcolors)
-
-    colorlist = ["red","blue","green","black"]
     #states = ["a","b","c"]
     #statedict = {"a":["b"],"b":["a","c"],"c":["b"]}
+    colorlist = ["red","blue","green","black"]
 
     statedict = {
 'Alabama':['Florida', 'Georgia', 'Mississippi', 'Tennessee'],
@@ -198,24 +167,18 @@ if __name__ == "__main__":
 'Washington':['Idaho', 'Oregon'],
 'West Virginia':['Kentucky', 'Maryland', 'Ohio', 'Pennsylvania', 'Virginia'],
 'Wisconsin':['Illinois', 'Iowa', 'Michigan', 'Minnesota'],
-'Wyoming':['Colorado', 'Idaho', 'Montana', 'Nebraska', 'South Dakota', 'Utah'],
-"Hawai":[],
-"Alaska":[]
+'Wyoming':['Colorado', 'Idaho', 'Montana', 'Nebraska', 'South Dakota', 'Utah']
 }
 
+    states = ['Alabama','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','Florida','Georgia','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine',"Maryland",'Massachusetts',
+        'Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Ohio','Oklahoma','Oregon',
+        'Pennsylvania','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington','West Virginia','Wisconsin','Wyoming']
 
-    #states = ['Illinois', 'Oklahoma', 'California', 'Utah', 'Wyoming', 'Missouri', 'Michigan', 'Texas', 'Iowa', 'Delaware', 'Tennessee', 'Maryland', 'Kentucky', 'Montana', 'Minnesota', 'Connecticut', 'Louisiana', 'West Virginia', 'Pennsylvania', 'Nebraska', 'Kansas', 'Indiana', 'Rhode Island', 'Arizona', 'Florida', 'Massachusetts', 'South Dakota', 'Nevada', 'South Carolina', 'Ohio', 'New Hampshire', 'Idaho', 'Washington', 'Colorado', 'Oregon', 'New Jersey', 'Mississippi', 'Arkansas', 'Vermont', 'Wisconsin', 'Alabama', 'Georgia', 'Maine', 'New Mexico', 'North Carolina', 'New York', 'Virginia', 'North Dakota']
+    #states = ['North Dakota', 'North Carolina', 'Connecticut', 'Utah', 'Nebraska', 'New Jersey', 'South Carolina', 'Maine', 'Minnesota', 'Colorado', 'Kansas', 'Indiana', 'Florida', 'Tennessee', 'Idaho', 'New York', 'Michigan', 'Massachusetts', 'Oklahoma', 'New Hampshire', 'Ohio', 'Mississippi', 'Arizona', 'Montana', 'Pennsylvania', 'Virginia', 'Louisiana', 'Kentucky', 'Rhode Island', 'Alabama', 'South Dakota', 'Wyoming', 'New Mexico', 'Wisconsin', 'Missouri', 'Maryland', 'West Virginia', 'Illinois', 'Georgia', 'Vermont', 'Washington', 'California', 'Nevada', 'Texas', 'Iowa', 'Arkansas', 'Oregon', 'Delaware']
 
-    states = ['New Hampshire', 'Oklahoma', 'Tennessee', 'Illinois', 'New Mexico', 'Kentucky', 'West Virginia', 'Maryland', 'Maine', 'Wisconsin', 'Missouri', 'Minnesota', 'Montana', 'Massachusetts', 'South Carolina', 'North Dakota', 'Pennsylvania', 'Arizona', 'South Dakota', 'Ohio', 'Oregon', 'Alabama', 'Indiana', 'Rhode Island', 'Virginia', 'Idaho', 'Nevada', 'Nebraska', 'New York', 'Utah', 'Michigan', 'Kansas', 'Florida', 'Connecticut', 'Iowa', 'Wyoming', 'Louisiana', 'California', 'Vermont', 'Texas', 'Georgia', 'New Jersey', 'North Carolina', 'Washington', 'Delaware', 'Colorado', 'Mississippi', 'Arkansas']
+    states = ['Maine', 'Minnesota', 'South Dakota', 'Illinois', 'Utah', 'Wyoming', 'Texas', 'Idaho', 'Wisconsin', 'Connecticut', 'Pennsylvania', 'Kansas', 'West Virginia', 'North Carolina', 'Colorado', 'California', 'Florida', 'Vermont', 'Virginia', 'North Dakota', 'Michigan', 'New Jersey', 'Nevada', 'Arkansas', 'Mississippi', 'Iowa', 'Kentucky', 'Maryland', 'Louisiana', 'Alabama', 'Oklahoma', 'New Mexico', 'Rhode Island', 'Massachusetts', 'South Carolina', 'Indiana', 'Delaware', 'Tennessee', 'Georgia', 'Arizona', 'Nebraska', 'Missouri', 'New Hampshire', 'Ohio', 'Oregon', 'Washington', 'Montana', 'New York']
 
-    """
-    states = ['Kansas', 'New Hampshire', 'Idaho', 'Louisiana', 'New Jersey', 'Arkansas', 'Kentucky', 'Maine', 'Minnesota', 'Missouri',
-            'West Virginia', 'North Carolina', 'Massachusetts', 'Michigan', 'Indiana', 'Illinois', 'Virginia', 'Oklahoma', 'Montana',
-            'North Dakota', 'Texas', 'Colorado', 'South Carolina', 'Maryland', 'California', 'New York', 'Florida', 'Vermont', 'Utah',
-            'Georgia', 'Oregon', 'Wisconsin', 'Rhode Island', 'Nebraska', 'New Mexico', 'Mississippi', 'Alabama', 'Nevada', 'Tennessee',
-            'Iowa','South Dakota', 'Ohio', 'Pennsylvania', 'Washington', 'Wyoming', 'Arizona', 'Delaware', 'Connecticut']
-
-
+    
     
     states=['wa','nt','q','nsw','v','sa']
 
@@ -228,42 +191,35 @@ if __name__ == "__main__":
         'v':['sa','nsw']}
     
     
-    """
-
-    #states = ['Ohio', 'Hawai', 'Vermont', 'Maine', 'Tennessee', 'Oklahoma', 'Colorado', 'Alabama', 'Oregon', 'Minnesota', 'New Mexico', 'Mississippi', 'Kansas', 'New Hampshire', 'Louisiana', 'Rhode Island', 'Montana', 'Wisconsin', 'Michigan', 'Arkansas', 'Maryland', 'Missouri', 'Massachusetts', 'North Dakota', 'Nevada', 'South Dakota', 'Illinois', 'Washington', 'Virginia', 'Indiana', 'Alaska', 'Connecticut', 'North Carolina', 'New York', 'New Jersey', 'Iowa', 'Kentucky', 'South Carolina', 'West Virginia', 'Idaho', 'Florida', 'Delaware', 'Nebraska', 'Arizona', 'Wyoming', 'California', 'Utah', 'Texas', 'Pennsylvania', 'Georgia']
     mystatedict = {}
     #print(states[41])
     #random.shuffle(states)
 
-    print(states)
-
     #print(states)
     root = init(states,statedict,numcolors)
-
+    
     start_time = time.time()
-    answer = singleton(mystatedict,statedict,numcolors,root,states,0)
-    end_time = time.time()
-    count = 0 
+    answer = dfs(mystatedict,statedict,numcolors,root,states,0)
+
     for key in answer[1]:
-        count+=1
         if answer[1][key] in getcolors(statedict[key],mystatedict):
             print("oops")
 
-
+    end_time = time.time()
     print("VERIFIED ANSWER")
+
     print(answer)
+
     print("NUMBER OF BACKTRACKS: "+ str(backtracks))
     print("TIME OF EXECUTION: " + str(end_time - start_time) + "seconds") 
 
-    print(len(all_states))
 
-    for i in range(0,len(all_states),2000):
-        colormap(all_states[i])
+    #for i in range(0,len(all_states),50000):
+    #    colormap(all_states[i])
 
 
-    colormap(mystatedict)
+    #colormap(mystatedict)
 
     time.sleep(10)
-    
 
 
